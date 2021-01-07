@@ -4,6 +4,8 @@ from django.http import HttpResponse
 from django.template import loader
 from datetime import datetime
 
+import random
+
 
 def index(request):
     now = datetime.now()
@@ -19,8 +21,23 @@ def select(request):
 
 
 def result(request):
-    chosen = request.GET['number']
+    chosen = int(request.GET['number']) # int 형변환 필요
+
+    results = []
+    if chosen >= 1 and chosen <= 45:
+        results.append(chosen)
+    
+    box = []
+    for i in range(0, 45):
+        if chosen != i+1:
+            box.append(i+1)
+
+    random.shuffle(box)
+
+    while len(results) < 6: # 로또 번호 6개
+        results.append(box.pop())
+
     context = {
-        'number': [chosen, 2, 3, 4, 5, 6]
+        'number': results
     }
     return render(request, 'first/result.html', context)
