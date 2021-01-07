@@ -10,14 +10,17 @@ def index(request):
     context = {
         'current_date': now
     }
-    return render(request, 'index.html', context)
+    return render(request, 'first/index.html', context)
 
 
 def select(request):
-    context = {'number':4}
-    return render(request, 'select.html', context)
+    context = {}
+    return render(request, 'first/select.html', context)
 
 
 def result(request):
-    context = {'number':[1,2,3,4,5,6]}
-    return render(request, 'result.html', context)
+    chosen = request.GET['number']
+    context = {
+        'number': [chosen, 2, 3, 4, 5, 6]
+    }
+    return render(request, 'first/result.html', context)
